@@ -1,40 +1,41 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { createContainer } from "unstated-next";
-
-interface TodoRemove {
-  (key: string): void
-}
-
-export interface TodoAdd {
-  (todo: Todo): void
-}
 
 export interface Todo {
   key: string
   content: string
 }
 
+type TodoList = Todo[]
+
+interface Action {
+  type: string
+  key?: string
+  todo?: Todo
+}
+
 interface UseTodo {
   todoList: Todo[]
-  remove: TodoRemove
-  add: TodoAdd
+  dispatch: React.Dispatch<Action>
 }
 
 const TODOLISTINITAL: Todo[] = []
 
-const useTodoList = (inital: Todo[] = TODOLISTINITAL): UseTodo => {
-  const [todoList, setTodoList] = useState<Todo[]>(inital);
-  const remove = (key: string) => {
-    const result = todoList.filter(todo => todo.key !== key)
-    setTodoList(result);
+const todosReducer = (state: TodoList, action: Action): TodoList => {
+  switch(action.type) {
+    case 'remove':
+      const result = state.filter(todo => todo.key !== action.key)
+      return result;
+    case 'add':
+      return [...state, (action.todo as Todo)];
+    default:
+      throw new Error('invalide action type');
   }
-  const add = (todo: Todo) => {
-    setTodoList([
-      ...todoList,
-      todo,
-    ])
-  }
-  return { todoList, remove, add };
+}
+
+const useTodoList = (inital: TodoList = TODOLISTINITAL): UseTodo => {
+  const [todoList, dispatch ] = useReducer(todosReducer, inital);
+  return { todoList, dispatch };
 };
 
 export const TodoListStore = createContainer(useTodoList);

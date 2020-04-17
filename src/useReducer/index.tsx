@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import TodoList from './TodoList';
 import TodoAdd from './TodoAdd';
-import { Provider } from './Store';
+import Store from './Store';
 
 const Index: React.FC = () => {
   const [content, setContent] = useState<string>('');
 
-  return <Provider>
+  return <Store.Provider>
        <TodoAdd content={content} onContentChange={setContent} />
        <TodoList />
-     </Provider>;
+     </Store.Provider>;
 }
 
 export default Index;

@@ -8,14 +8,14 @@ interface TodoAddProps {
 }
 
 const TodoAdd: React.FC<TodoAddProps> = ({ content, onContentChange }) => {
-  const { add } = TodoListStore.useContainer();
+  const { dispatch } = TodoListStore.useContainer();
 
   const handleTodoAdd = () => {
     const todo: Todo = {
       key: uuidv4(),
       content: content,
     }
-    add(todo);
+    dispatch({ type: 'add', todo });
     onContentChange('');
   }
 

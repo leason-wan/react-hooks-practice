@@ -1,4 +1,3 @@
-import React  from "react";
 import { createStore, Store} from './createStore';
 
 interface Todo {

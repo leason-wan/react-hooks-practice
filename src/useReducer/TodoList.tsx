@@ -1,16 +1,16 @@
 import React from 'react';
-import { useStore } from './Store';
+import Store from './Store';
 
 const TodoList: React.FC = () => {
-  const { state, dispatch } = useStore();
+  const store: any = Store.useStore();
   
   const handleTodoRemove = (key: string) => {
-    dispatch('remove', key);
+    store.dispatch('remove', key);
   }
 
   return <>
     {
-      state.map((todo: any) => {
+      store.state.map((todo: any) => {
         return <div key={todo.key}>
           <p>{todo.content}</p>
           <button onClick={() => handleTodoRemove(todo.key)}>remove</button>

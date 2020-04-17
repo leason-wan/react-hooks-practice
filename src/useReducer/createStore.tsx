@@ -6,7 +6,7 @@ type ProviderProps = React.FC<{
 
 type Dispatch = (type: string, args: any) => void
 
-type UseStore = (store: any) => void
+type UseStore = () => void
 
 export interface Store {
   Provider: React.FC
@@ -21,11 +21,10 @@ export const createStore = (store: any): Store => {
     const actionKeys = Object.keys(store.actions);
     const hasType = actionKeys.includes(type);
     if (!hasType) {
-      throw Error('actions is invalided')
+      throw Error('dispatch actions is invalided')
     }
     const action = store.actions[type];
-    action(args);
-    setState(state);
+    setState(action(state, args));
   }
 
   const Context = React.createContext({state, dispatch});
@@ -35,8 +34,8 @@ export const createStore = (store: any): Store => {
     return <Context.Provider value={{state: initalState, dispatch}} >{children}</Context.Provider>;
   }
 
-  const useStore = (store: any): React.Context<any> => {
-    const context = React.useContext<any>(store);
+  const useStore = () => {
+    const context = React.useContext(Context);
     return context;
   }
 

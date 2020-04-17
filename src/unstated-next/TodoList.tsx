@@ -2,10 +2,10 @@ import React from 'react';
 import { TodoListStore } from './Store';
 
 const TodoList: React.FC = () => {
-  const { todoList, remove } = TodoListStore.useContainer();
+  const { todoList, dispatch } = TodoListStore.useContainer();
   
   const handleTodoRemove = (key: string) => {
-    remove(key);
+    dispatch({type: 'remove', key})
   }
 
   return <>
