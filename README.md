@@ -1,15 +1,19 @@
-# Introduction
+# 介绍
 
 函数式组件中不能够有副作用，导致函数式组件早期缺少类组件的生命周期与状态。
 hooks使函数式组件拥有了处理副作用的能力，让函数式组件和类组件可以达到相同的能力。
 使用起来，hooks优雅一点，可抽象能力更强，但心智负担较高。
 
-本仓库是react hooks在实践中的几种方式
+本仓库是react hooks在实践中的几种方式和react hooks的实现方式。
 
 - unstated-next
 - useReducer
 
-# Question
+# 问题
 
 基于useState来管理全局的状态，单个属性更新会影响全局，可能会造成性能瓶颈。  
-useReducer和redux一样本身无法处理异步，需要自己包裹一层redux-thunk类似的东西，不建议使用。
+useReducer和redux一样本身无法处理异步，需要自己包裹一层redux-thunk类似的东西，比较繁琐不建议使用。
+
+# 总结
+
+项目全局状态管理建议使用第三方成熟的库(mobx等)，页面及组件级的状态管理建议使用hooks。
